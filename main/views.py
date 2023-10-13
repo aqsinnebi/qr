@@ -8,6 +8,7 @@ from django.contrib.auth import get_user_model
 from . models import CustomUser
 from django.urls import reverse
 
+
 User = get_user_model()
 
 
@@ -76,7 +77,7 @@ def login(request):
         username = request.POST['username']
         password = request.POST['password']
 
-        user = auth.authenticate(username=username, password=password)
+        user = auth.authenticate(username=username, password=password, request=request)
         
         if user is not None:
             auth.login(request,user)
