@@ -1,12 +1,13 @@
 from django.shortcuts import render,redirect
 import qrcode
 from django.core.files.storage import FileSystemStorage
-from django.contrib.auth.models import User , auth
+from django.contrib.auth.models import User, auth
 from  django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 from . models import CustomUser
 from django.urls import reverse
+
 User = get_user_model()
 
 
@@ -95,6 +96,7 @@ def settings(request):
     
     
     userid = CustomUser.objects.get(id = request.user.id )
+    
     userid1 = CustomUser.objects.get(id = request.user.id )
     
     imgs = CustomUser.objects.filter(id = request.user.id)

@@ -99,86 +99,92 @@
 
 
 
-<style>
-    .text-center {
+    <style>
+        .text-center {
 
-        width: 500px;
-
-
-
-    }
-
-
-    .text-center span {
-
-        color: red;
-
-
-    }
-
-    .card-body {
-
-        background-color: rgb(236, 231, 224);
-    }
-</style>
-
-
-<br>
-
-
-{% if request.user.is_superuser == 1 %}
+            width: 500px;
 
 
 
-<table class="table">
-
-    <thead class="thead-dark">
-
-        <tr>
+        }
 
 
-            <th>User</th>
-            <th></th>
-            <th>
-                
-            </th>
+        .text-center span {
 
-        </tr>
-
-    </thead>
+            color: red;
 
 
-    {% for x in user_id %}
+        }
+
+        .card-body {
+
+            background-color: rgb(236, 231, 224);
+        }
+    </style>
+
+
+    <br>
+
+
+    {% if request.user.is_superuser == 1 %}
+
+
+
+    <table class="table" id="cikargoster">
+
+        <thead class="thead-dark">
+
+            <tr>
+
+
+                <th>User</th>
+                <th></th>
+                <th>
+
+                </th>
+
+            </tr>
+
+        </thead>
+
+
+        {% for x in user_id %}
 
         <tbody>
 
 
             <tr>
 
+
                 <td>{{x.username}}</td>
                 <td>
+                    {% if x.is_active == 1 %}
 
-                    <a href="{% url 'block' x.id %}">Block</a>
+                    <a class="btn btn-success btn-sm " href="{% url 'block' x.id %}#cikargoster"><i
+                            class="bi bi-toggle-on"></i></a>
 
+
+                    {%else %}
+
+                    <a class="btn btn-warning btn-sm " href="{% url 'disblock' x.id %}#cikargoster"><i
+                            class="bi bi-toggle-on"></i></a>
                 </td>
-                <td>
-                    <a href="{% url 'disblock' x.id %}">Disblock</a>
-                </td>
 
+                {%endif%}
             </tr>
 
         </tbody>
 
-    {% endfor %}
+        {% endfor %}
 
 
-</table>
+    </table>
 
 
 
 
 
-{% endif %}
+    {% endif %}
 
 </div>
 

@@ -10,7 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 
 """
-
+from datetime import timedelta
 from pathlib import Path
 import os
 
@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'main',
+    'axes',
     
 ]
 
@@ -51,7 +52,21 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'axes.middleware.AxesMiddleware',
 ]
+
+
+AUTHENTICATION_BACKENDS=[
+    
+    
+    'axes.backends.AxesStandaloneBackend',
+    
+    
+    'django.contrib.auth.backends.ModelBackend',
+    
+]
+
+
 
 ROOT_URLCONF = 'qr.urls'
 
@@ -119,6 +134,12 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
+
+AXES_FAILURE_LIMIT = 3
+AXES_ONLY_USER_FAILUSER= True
+# ATOMIC_REQUESTS= False
+ATOMIC_LOCKOUT_TEMPLATE='main/axes_lockout.html'
+AXES_COOLOFF_TIME= timedelta(seconds=10)
 
 
 
