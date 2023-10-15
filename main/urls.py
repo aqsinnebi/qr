@@ -14,12 +14,18 @@ urlpatterns = [
     
     path('logout/',views.logout,name='logout'),
     
-    path('settings/',views.settings,name='settings'),   
+    path('settings/',views.settings_profile,name='settings_profile'),   
     
     
     path('updateprofile/<int:id>',views.updateprofile,name='updateprofile'),
     
     path('block/<int:id>',views.block,name='block'),
-    path('disblock/<int:id>', views.disblock, name='disblock'),
+
+    
+    path('active/<int:id>',views.active,name='active'),
+    
+    path('send__mail/',views.send__mail,name='send__mail'),
+    
+    path('delete/<int:pk>',views.delete,name='delete'),
 
 ]   

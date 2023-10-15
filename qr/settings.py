@@ -10,9 +10,14 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 
 """
-from datetime import timedelta
+
 from pathlib import Path
 import os
+
+from datetime import timedelta
+
+
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -27,7 +32,11 @@ SECRET_KEY = 'django-insecure-mxj(v^jxjw8mi%b)j(k@ftdy=icqz3)6tq!h*v)gj72zhh-1_&
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    
+   
+   
+]
 
 
 # Application definition
@@ -40,11 +49,15 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'main',
-    'axes',
+    'axes'
+
     
 ]
 
 MIDDLEWARE = [
+    
+    
+   
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -53,18 +66,29 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'axes.middleware.AxesMiddleware',
+   
+   
 ]
 
 
-AUTHENTICATION_BACKENDS=[
-    
-    
+
+AUTHENTICATION_BACKENDS = [
+    # AxesStandaloneBackend should be the first backend in the AUTHENTICATION_BACKENDS list.
     'axes.backends.AxesStandaloneBackend',
-    
-    
+
+    # Django ModelBackend is the default authentication backend.
     'django.contrib.auth.backends.ModelBackend',
     
 ]
+
+
+
+
+
+
+
+
+
 
 
 
@@ -81,6 +105,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                
             ],
         },
     },
@@ -131,16 +156,21 @@ USE_I18N = True
 USE_TZ = True
 
 
+
+
+
+
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
+AXES_FAILURE_LIMIT = 4
+# AXES_ONLY_USER_FAILURES = True
+# ATOMIC_REQUESTS = False
+AXES_LOCKOUT_TEMPLATE = 'main/axes_lockout.html'
+AXES_LOCK_OUT_AT_FAILURE = True
 
-AXES_FAILURE_LIMIT = 3
-AXES_ONLY_USER_FAILUSER= True
-# ATOMIC_REQUESTS= False
-ATOMIC_LOCKOUT_TEMPLATE='main/axes_lockout.html'
-AXES_COOLOFF_TIME= timedelta(seconds=10)
-
+AXES_COOLOFF_TIME = timedelta(minutes=1)
 
 
 STATIC_URL = 'static/'
@@ -162,3 +192,12 @@ AUTH_USER_MODEL = 'main.CustomUser'
 LOGIN_URL = 'login'
 
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+
+
+
+EMAIL_HOST_USER = "aqsinnebizade222@gmail.com"
+EMAIL_HOST_PASSWORD = "kdcmdcwuxylolrmn"

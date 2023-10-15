@@ -8,7 +8,7 @@
     <title>Sign Up Form by Colorlib</title>
 
     <!-- Font Icon -->
-    <link rel="stylesheet" href="{% static 'fonts/material-icon/css/material-design-iconic-font.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/fonts/material-icon/css/material-design-iconic-font.min.css' %}">
 
     <!-- Main css -->
     <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
@@ -17,12 +17,26 @@
 
     <div class="main">
 
-     
 
         <!-- Sing in  Form -->
         <section class="sign-in">
             <div class="container">
+                
+       
+
+
                 <div class="signin-content">
+
+                    {% if messages %}
+                        
+                    
+                    {% for message in messages %}
+                        
+                        {{message}}
+        
+                    {% endfor %}
+        
+                    {% endif %}
                     <div class="signin-image">
                         <figure><img src="{% static 'assets/images/signin-image.jpg' %}" alt="sing up image"></figure>
                         <a href="{% url 'register' %}" class="signup-image-link">Create an account</a>

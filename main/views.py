@@ -1,15 +1,19 @@
 from django.shortcuts import render,redirect
 import qrcode
 from django.core.files.storage import FileSystemStorage
-from django.contrib.auth.models import User, auth
+from django.contrib.auth.models import User , auth
 from  django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 from . models import CustomUser
 from django.urls import reverse
+from django.core.mail import send_mail
 
+from django.conf import settings
 
 User = get_user_model()
+
+
 
 
 @login_required()
@@ -18,10 +22,11 @@ def index(request):
   
     data = ''
     if request.method == 'POST':
+
         data = request.POST['qr']
         img = qrcode.make(data)
         img.save('static/images/test.png')
-    
+       
     return render(request, 'main/index.html',{'data':data,'imgs':imgs})
 
 
@@ -77,7 +82,7 @@ def login(request):
         username = request.POST['username']
         password = request.POST['password']
 
-        user = auth.authenticate(username=username, password=password, request=request)
+        user = auth.authenticate(username=username, password=password,request = request)
         
         if user is not None:
             auth.login(request,user)
@@ -91,24 +96,17 @@ def logout(request):
     return redirect('login')
 
 
-def settings(request):
+def settings_profile(request):
     
     user_id = CustomUser.objects.all()
     
     
     userid = CustomUser.objects.get(id = request.user.id )
     
-    userid1 = CustomUser.objects.get(id = request.user.id )
     
     imgs = CustomUser.objects.filter(id = request.user.id)
 
-
-    context={'imgs':imgs,
-             'userid':userid,
-              'user_id':user_id,
-              'userid1':userid1,}
-
-    return render(request, 'main/settings.html', context)
+    return render(request, 'main/settings_profile.html',{'imgs':imgs,'userid':userid,'user_id':user_id})
 
 def updateprofile(request,id):
     
@@ -149,25 +147,62 @@ def updateprofile(request,id):
                     
         user.save()
 
-    return redirect('settings')
+    return redirect('settings_profile')
 
 
 def block(request,id):
     
    userid = CustomUser.objects.get(id =id)
-   userid.is_active = 0
+   userid.is_active = False
    userid.save()
    
+   
+   
+   
    return redirect(reverse('settings'))
-    
-    
-def disblock(request, id ):
-    
-    userid = CustomUser.objects.get(id=id)
-    userid.is_active = 1
+
+def active(request,id):
+    userid = CustomUser.objects.get(id =id)
+    userid.is_active = True
     userid.save()
-    
+   
+   
+   
+   
     return redirect(reverse('settings'))
+    
+    
+def error_page(request,exception):
+    
+    return render(request,'404.html',status=404)
+
+
+
+
+def send__mail(request):   
+    
+    subject = request.POST['subject'] , request.POST['email']
+    message = request.POST['text']
+    
+    email_from = request.user.email
+    recipient_list =   [ "aqsinnebizade222@gmail.com" ]
+
+    send_mail( subject, message, email_from, recipient_list )
+    
+    return redirect('contact')
+
+
+
+
+def delete(request, pk):
+    
+    
+    yes= CustomUser.objects.all()
+    pas= CustomUser.objects.get(id=pk)
+    
+    pas.delete()
+
+    return render(request, 'main/settings_profile.html',{'yes':yes}) 
 
 
 
