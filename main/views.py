@@ -159,7 +159,7 @@ def block(request,id):
    
    
    
-   return redirect(reverse('settings'))
+   return redirect(reverse('settings_profile'))
 
 def active(request,id):
     userid = CustomUser.objects.get(id =id)
@@ -169,7 +169,7 @@ def active(request,id):
    
    
    
-    return redirect(reverse('settings'))
+    return redirect(reverse('settings_profile'))
     
     
 def error_page(request,exception):
@@ -202,9 +202,9 @@ def delete(request, pk):
     
     pas.delete()
 
-    return render(request, 'main/settings_profile.html',{'yes':yes}) 
+    # return render(request, 'main/settings_profile.html',{'yes':yes}) 
 
-
+    return redirect(reverse('settings_profile'), {'yes':yes})
 
 
 
