@@ -79,17 +79,21 @@ def register(request):
 def login(request):
     
     if request.method == 'POST':
+        form = CustomUser(request.POST)
         username = request.POST['username']
         password = request.POST['password']
-
-        user = auth.authenticate(username=username, password=password,request = request)
+        
+        user = auth.authenticate(username=username, password=password ,request = request)
         
         if user is not None:
             auth.login(request,user)
-            return redirect('index')
-            
-    
-    return render(request, 'main/login.html')
+            if not request.POST.get('remember_me'):
+                request.session.set_expiry(0)
+            return redirect('index')                
+    else:
+        form = CustomUser()
+       
+    return render(request, 'main/login.html',{'form': form})
 
 def logout(request):
     auth.logout(request)
@@ -106,7 +110,7 @@ def settings_profile(request):
     
     imgs = CustomUser.objects.filter(id = request.user.id)
 
-    return render(request, 'main/settings_profile.html',{'imgs':imgs,'userid':userid,'user_id':user_id})
+    return render(request, 'main/settings_profile.html',{'imgs':imgs,'userid':userid,'user_id':user_id, })
 
 def updateprofile(request,id):
     
@@ -205,7 +209,6 @@ def delete(request, pk):
     # return render(request, 'main/settings_profile.html',{'yes':yes}) 
 
     return redirect(reverse('settings_profile'), {'yes':yes})
-
 
 
 
